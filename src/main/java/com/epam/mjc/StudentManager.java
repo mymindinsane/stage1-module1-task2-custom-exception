@@ -1,12 +1,18 @@
 package com.epam.mjc;
 
 
+import java.rmi.StubNotFoundException;
+
 public class StudentManager {
 
   private static final long[] IDs = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
 
   public Student find(long studentID) {
-    return Student.getValueOf(studentID);
+    if (Student.getValueOf(studentID) == null || studentID > IDs.length - 1 || studentID < 0){
+      throw new studentNotFoundException("Could not find student with ID " + studentID);
+    } else {
+      return Student.getValueOf(studentID);
+    }
   }
 
   public static void main(String[] args) {
@@ -16,6 +22,5 @@ public class StudentManager {
       Student student = manager.find(IDs[i]);
       System.out.println("Student name " + student.getName());
     }
-
   }
 }
